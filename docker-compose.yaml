@@ -1,0 +1,18 @@
+---
+version: '3'
+services:
+  fluentd:
+    image: index.docker.io/oaklabs/component-fluentd:latest
+    network_mode: host
+    environment:
+      GOOGLE_ZONE: your-gcp-zone
+    volumes:
+      - ./fluentd.conf:/fluentd.conf:ro
+      - ./gcp-credentials.json:/gcp-credentials.json:ro
+  telegraf:
+    image: index.docker.io/telegraf:1.9.5-alpine
+    network_mode: host
+    environment:
+      INFLUXDB_HOST: your.influxdb.host
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
